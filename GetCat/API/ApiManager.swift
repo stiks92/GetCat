@@ -28,7 +28,7 @@ class ApiManager {
                             newModel.width = item.height
                             completion(newModel)
                     }
-                } else {return}
+                } else { return }
             }
     }
 }

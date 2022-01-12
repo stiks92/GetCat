@@ -44,7 +44,7 @@ class CatStorage {
     
     func deleteObject(object: CatModel) {
         let memory = realm.objects(CatStorageModel.self)
-        if let memoryURL = memory.first(where: {$0.url == object.url}) {
+        if let memoryURL = memory.first(where: { $0.url == object.url }) {
             try! realm.write {
                 realm.delete(memoryURL)
             }

@@ -14,7 +14,7 @@ class CatCollectionViewCell: UICollectionViewCell {
     
     func updateCell(data: CatModel?) {
         
-        guard let url: URL = URL(string: data?.url ?? "") else {return}
+        guard let url: URL = URL(string: data?.url ?? "") else { return }
         
         catImage.kf.setImage(with: url)
     }

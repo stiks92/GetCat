@@ -48,9 +48,11 @@ extension FavoriteCatViewController: UICollectionViewDelegate, UICollectionViewD
         let item = indexPath.item
         singleCatController.favoriteCatModel = self.favoriteCatsArray[indexPath.row]
         singleCatController.onDelete = { [weak self]  in
-                    self?.favoriteCatsArray.remove(at: item)
-                    collectionView.deleteItems(at: [indexPath])
-                }
+            guard let self = self else { return }
+            
+            self.favoriteCatsArray.remove(at: item)
+            collectionView.deleteItems(at: [indexPath])
+        }
         
         self.present(singleCatController, animated: true, completion: nil)
         collectionView.deselectItem(at: indexPath, animated: true)

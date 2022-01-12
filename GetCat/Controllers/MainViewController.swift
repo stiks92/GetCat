@@ -29,7 +29,9 @@ class MainViewController: UIViewController {
         catsCollectionView.delegate = self
         catsCollectionView.dataSource = self
         
-        ApiManager.shared.catParsing { newModel in
+        ApiManager.shared.catParsing { [weak self] newModel in
+            guard let self = self else { return }
+            
             DispatchQueue.main.async {
                 self.array.append(newModel)
                 self.catsCollectionView.reloadData()
@@ -98,13 +100,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if ((catsCollectionView.contentOffset.y + catsCollectionView.frame.size.height) >= catsCollectionView.contentSize.height)
         {
-            DispatchQueue.global().async {
-                sleep(2)
-                ApiManager.shared.catParsing { newModel in
-                    DispatchQueue.main.async {
-                        self.array.append(newModel)
-                        self.catsCollectionView.reloadData()
-                    }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                ApiManager.shared.catParsing { [weak self] newModel in
+                    guard let self = self else { return }
+                    self.array.append(newModel)
+                    self.catsCollectionView.reloadData()
                 }
             }
         }
